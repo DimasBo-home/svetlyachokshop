@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{page.title}} - {{block.super}}
+{% endblock %}
+
+{% block content %}
+	
+		<h3>{{page.title}}</h3>
+		{% if request.user.is_authenticated and request.user.is_staff %}
+			<a href="{{ page.get_edit_url }}"><img width="20" height="20" src="{% static 'img/edit.png' %}">редагувати</a>
+		{% endif %}
+		<p>{{ page.description|safe }}</p>
+{% endblock %}

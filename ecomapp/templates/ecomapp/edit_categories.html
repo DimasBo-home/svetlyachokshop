@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Редактор Категорій - {{block.super}}
+{% endblock %}
+
+{% block other %}
+	
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	  	<li  class="breadcrumb-item">Редактор категорій </li>
+	  </ol>
+	</nav>
+
+{% endblock %}
+
+{% block content %}
+	<div class="row my-3">
+		<div class="col-md-5">
+			<h3 class="col-12">Категорії</h3>
+		{% for category in categories %}
+			<p>
+				{{category.name}}
+				<a href="{% url 'admin:ecomapp_category_change' object_id=category.id %}" target="_blank"і>
+					<img width="20" height="20" src="{% static 'img/edit.png' %}">перейменувати 
+				</a>
+				<a href="{% url 'admin:ecomapp_category_delete' object_id=category.id %}" target="_blank">
+					<img width="20" height="20" src="{% static 'img/edit.png' %}">видалити
+				</a>
+			</p>
+		{% endfor %}
+		</div>
+		<div class="col-md-7">
+			<h3 class="col-12">Додати категорію</h3>
+			<form method="post" action="{% url 'edit_categories_url' %}" class="form-inline">
+			  	{% csrf_token %}
+			  <div class="form-group mb-2">
+			    {{form.name.label}}
+			  </div>
+			  <div class="form-group mx-sm-3 mb-2">
+			  	{{form.name}}
+			  </div>
+			  <button type="submit" class="btn btn-primary mb-2">Додати</button>
+			</form>
+		</div>
+	</div>
+{% endblock %}

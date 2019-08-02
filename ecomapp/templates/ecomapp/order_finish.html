@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Замовлення оформленне - {{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="row w-100">
+	<h3 class="col-12">Замовлення оформленне</h3>
+	<p class="col-12">Ми приняли замовлення в обробку, очікуйте дзвінок.<br>
+	Якщо вже вечір дзвінок, очікуйте вранці.<br>
+	Дякуюємо за розумінння.</p>
+	<a href="{% url 'index' %}" class="col-12">Продовжити покупки</a>
+	<img src="{% static 'img/cell.gif' %}" class="col-md-6 col-sm-12" alt="cell phone">
+</div>
+{% endblock %}

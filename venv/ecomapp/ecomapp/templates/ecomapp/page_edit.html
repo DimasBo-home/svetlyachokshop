@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Редактор {{page.title}} - {{block.super}}
+{% endblock %}
+
+{% block content %}
+	<nav aria-label="breadcrumb">
+	  <ol class="breadcrumb">
+	  	<li  class="breadcrumb-item">Редактор сторінок </li>
+	    <li class="breadcrumb-item active" aria-current="page">редагуем сторінку {{page.title}}</li>
+	  </ol>
+	</nav>
+	<div class="row my-3">
+
+		<h3 class="col-12">{{page.title}}</h3>
+		<form action="{{ tag.get_edit_url }}" method="post">
+		{% csrf_token %}
+		<div class="form-group">
+			{% if form.description.errors %}
+			<div class="alert alert-danger">
+				{{form.description.errors}}
+			</div>
+			{% endif %}
+			
+		{{ form.description }}
+		  <div class="form-group">
+			<button type="submit" class="btn float-right btn-success">Завершити</button>
+		</div>
+		</form>
+	</div>
+{% endblock %}

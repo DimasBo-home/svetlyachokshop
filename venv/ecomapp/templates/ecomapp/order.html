@@ -1,0 +1,67 @@
+{% extends 'base.html' %}}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+Оформлення замовлення
+{% endblock %}
+
+{% block content %}
+	<h3>Оформлення замовлення</h3>
+	<h4>Ваші покупки</h4>
+	{% if cart.item.count > 0 %}
+		<table class="table table-bordered">
+		  <thead>
+		    <tr>
+		      <th scope="col">Продукт</th>
+		      <th scope="col">Кількість</th>
+		      <th scope="col">ціна</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% for item in cart.item.all %}
+		    
+		    <tr>
+		      <th scope="row">
+      			<a style="text-decoration: none; color: #323" href="{{ item.product.get_absolute_url }}">
+			      	<img src="{{ item.product.album_cover.url }}" height="40" alt="{{ item.product.slug }}" >
+		 			{{ item.product.title }}
+		      	</a>
+		
+		      </th>
+		      <td>{{ item.qty }}</td>
+		      <td>{{ item.item_total }} грн</td>
+		    </tr>
+
+		    {% endfor %}
+		  </tbody>
+
+		</table>
+	<h3><small> Ціна замовлення: </small>{{ cart.cart_total }} грн.</h3>
+		{% else %}
+		<p>У вас нема покупок.</p>
+	<a href="{{request.META.HTTP_REFERER}}">Продовжити покупки</a>
+		{% endif %}
+
+	<form action="{% url 'create_order_url'  %}" method="post">
+		{% csrf_token %}
+		{% for field in form %}
+			<div class="form-group">
+			{% if field.errors %}
+			<div class="alert alert-danger">
+				{{field.errors}}
+			</div>
+			{% endif %}
+			  <div class="form-group row">
+			    <label class="col-sm-2 col-form-label">{{ field.label }}</label>
+			    <div class="col-sm-10">
+						{{ field }}
+				</div>
+			  </div>
+
+			</div>
+		{% endfor %}
+		<div class="form-group">
+			<button type="submit" class="btn btn-success">Завершити</button>
+		</div>
+	</form>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base_order.html' %}
+{% load static %}
+{% block title %}
+Додати Продукт - {{ block.super }} 
+{% endblock %}
+
+{% block other %}
+{{ block.super }}
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+		<div class="col-md-12">
+							<div class="section-title">
+								<h2 class="title">{{ title|title }}</h2>
+								<div class="pull-right">
+									<div class="product-slick-dots-1 custom-dots"></div>
+								</div>
+							
+							</div>
+	</div>
+{% for product in products %}
+	{% include 'ecomapp/includes/product_order_item.html' %}
+{% endfor %}
+</div>
+{% endblock %}

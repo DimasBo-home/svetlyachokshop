@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Кошик 
+{% endblock %}
+
+{% block content %}
+
+<div class="row">
+	<div class="col-12">
+		<h3>Ваша корзина</h3>
+		{% if cart.item.count > 0 %}
+		<table class="table table-bordered">
+		  <thead>
+		    <tr>
+		      <th scope="col">Продукт</th>
+		      <th scope="col">Кількість</th>
+		      <th scope="col">ціна</th>
+		      <th scope="col"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% for item in cart.item.all %}
+		    
+		    <tr>
+		      <th scope="row">
+		      	<a style="text-decoration: none; color: #323" href="{{ item.product.get_absolute_url }}">
+			      	<img src="{{ item.product.album_cover.url }}" height="40" alt="{{ item.product.slug }}" >
+		      		<h4 >{{ item.product.title }}</h4>
+		      	</a>
+		  	</th>
+		      <td>
+<a class="btn btn-light" href="{% url 'minus_to_cart_url' slug=item.product.slug %}"><</a>
+		      {{ item.qty }}
+<a class="btn btn-light" href="{{ item.product.get_add_to_cart_url }}">></a>
+		  </td>
+		      <td>{{ item.item_total }} грн</td>
+		      <td><a class="btn btn-danger" href="{% url 'remove_from_view_url' slug=item.product.slug %}">вилучити з корзини</a></td>
+		    </tr>
+
+		    {% endfor %}
+
+		    <tr>
+		      <th></th>
+		      <td scope="row">всього</td>
+		      <td scope="row">{{ cart.cart_total }} грн</td>
+		      
+		      <td></td>
+		    </tr>
+		  </tbody>
+
+		</table>
+	<div class="col-12">
+		<a class="float-right btn btn-primary" href="{% url 'create_order_url' %}">Оформити Замовлення</a>
+	</div>
+		{% else %}
+		<p>Пуста</p>
+		<a href="{% url 'index' %}">Продовжити покупки</a>
+		{% endif %}
+	
+	</div>
+</div>
+	
+{% endblock %}
